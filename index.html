@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Average Calculator</title>
+    <style>
+        body {
+            font-family: "helvetica";
+            background-color: black;
+        }
+
+        #container {
+            background-color: white;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 300px;
+            width: 50%;
+            max-width: 400px;
+            border-radius: 5px;
+        }
+
+        span {
+            width: 200px;
+        }
+
+        .sub-con {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 10px;
+        }
+
+        input[type=number] {
+            width: 100px;
+            height: 20px;
+            border: none;
+            border-bottom: 1px dotted black;
+            outline: none;
+            text-align: right;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        input[type=button],
+        input[type=reset] {
+            height: 40px;
+            font-size: 1rem;
+            border: none;
+            background-color: black;
+            color: white;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+            width: 50%;
+            border-radius: 5px;
+        }
+
+        .title {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .avg-con {
+            align-items: center;
+        }
+
+        #average {
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            height: 30px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.05);
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <div id="container">
+            <div class="title">Owned Stock Info</div>
+            <div class="sub-con">
+                <span>Average:</span>
+                <input type="number" name="curr-avg" id="curr-avg">
+            </div>
+            <div class="sub-con">
+                <span>No. of Shares:</span>
+                <input type="number" name="avg-count" id="avg-count">
+            </div>
+            <div: class="title">Buying Share Info</div:>
+            <div class="sub-con">
+                <span>Share Price:</span>
+                <input type="number" name="curr-price" id="curr-price">
+            </div>
+            <div class="sub-con">
+                <span>Quantity:</span>
+                <input type="number" name="buy-count" id="buy-count">
+            </div>
+            <div class="sub-con avg-con">
+                <span>New Average:</span>
+                <div id="average">0</div>
+            </div>
+            <div class="sub-con">
+                <input type="reset" value="Reset">
+                <input type="button" value="Calculate" onclick="calAverage()">
+            </div>
+        </div>
+    </form>
+    <script>
+        var curr_avg, avg_count, curr_price, buy_count, average = 0;
+        document.querySelector("#curr-avg").addEventListener("change", function (e) {
+            curr_avg = makeInt(e.target.value)
+        })
+        document.querySelector("#avg-count").addEventListener("change", function (e) {
+            avg_count = makeInt(e.target.value)
+        })
+        document.querySelector("#curr-price").addEventListener("change", function (e) {
+            curr_price = makeInt(e.target.value)
+        })
+        document.querySelector("#buy-count").addEventListener("change", function (e) {
+            buy_count = makeInt(e.target.value)
+        })
+
+        function makeInt(str) {
+            return parseFloat(str)
+        }
+
+        function calAverage() {
+            var new_count = avg_count + buy_count
+            average = ((curr_avg * avg_count) + (curr_price * buy_count)) / new_count
+            document.querySelector("#average").innerHTML = average.toFixed(2)
+        }
+    </script>
+</body>
+
+</html>
