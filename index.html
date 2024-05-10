@@ -13,20 +13,30 @@
             background-color: black;
         }
 
-        #container {
-            background-color: white;
+        #main {
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+            width: 50%;
+            width: 340px;
+            overflow: hidden;
+        }
+
+        #main-con {
+            display: flex;
+            position: relative;
+            left: 0;
+            transition: all .3s ease;
+        }
+
+        .container {
+            background-color: white;
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            min-width: 300px;
-            width: 50%;
-            max-width: 400px;
+            width: 300px;
             border-radius: 5px;
         }
 
@@ -92,7 +102,17 @@
             align-items: center;
         }
 
-        #average {
+        #p1-link,
+        #p2-link {
+            text-align: center;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+            padding: 10px 0;
+        }
+
+        #average,
+        #quantity {
             font-size: 1.5rem;
             display: flex;
             justify-content: end;
@@ -107,55 +127,110 @@
 </head>
 
 <body>
-    <form id="sform" action="">
-        <div id="container">
-            <div class="title">Owned Stock Info</div>
-            <div class="sub-con">
-                <span>Average:</span>
-                <input type="number" name="curr-avg" id="curr-avg">
-            </div>
-            <div class="sub-con">
-                <span>Quantity:</span>
-                <input type="number" name="avg-count" id="avg-count">
-            </div>
-            <div: class="title">Buying Share Info</div:>
-            <div class="sub-con">
-                <span>Share Price:</span>
-                <input type="number" name="curr-price" id="curr-price">
-            </div>
-            <div class="sub-con">
-                <span>Quantity:</span>
-                <input type="number" name="buy-count" id="buy-count">
-            </div>
-            <div class="sub-con avg-con">
-                <span>New Average:</span>
-                <div id="avg-with-icon">
-                    <div id="average"></div>
-                    <div id="icon"> &leftarrow;</div>
+    <div id="main">
+        <div id="main-con">
+            <form id="qform" action="">
+                <div class="container">
+                    <div class="title">Owned Stock Info</div>
+                    <div class="sub-con">
+                        <span>Average:</span>
+                        <input type="number" name="curr-avg" id="curr-avg">
+                    </div>
+                    <div class="sub-con">
+                        <span>Quantity:</span>
+                        <input type="number" name="avg-count" id="avg-count">
+                    </div>
+                    <div: class="title">Buying Share Info</div:>
+                    <div class="sub-con">
+                        <span>Share Price:</span>
+                        <input type="number" name="curr-price" id="curr-price">
+                    </div>
+                    <div class="sub-con">
+                        <span>Quantity:</span>
+                        <input type="number" name="buy-count" id="buy-count">
+                    </div>
+                    <div class="sub-con avg-con">
+                        <span>New Average:</span>
+                        <div id="avg-with-icon">
+                            <div id="average"></div>
+                            <div id="icon"> &leftarrow;</div>
+                        </div>
+                    </div>
+                    <div class="sub-con">
+                        <input type="button" value="Reset" onclick="reInit()">
+                        <input type="button" value="Calculate" onclick="calAverage()">
+                    </div>
+                    <span id="p1-link">Stock Quantity Calculator &rightarrow;</span>
                 </div>
-            </div>
-            <div class="sub-con">
-                <input type="button" value="Reset" onclick="reInit()">
-                <input type="button" value="Calculate" onclick="calAverage()">
-            </div>
+            </form>
+            <form id="sform" action="">
+                <div class="container">
+                    <div class="title">Owned Stock Info</div>
+                    <div class="sub-con">
+                        <span>Average:</span>
+                        <input type="number" name="curr-avg2" id="curr-avg2">
+                    </div>
+                    <div class="sub-con">
+                        <span>Quantity:</span>
+                        <input type="number" name="avg-count2" id="avg-count2">
+                    </div>
+                    <div: class="title">Buying Share Info</div:>
+                    <div class="sub-con">
+                        <span>Share Price:</span>
+                        <input type="number" name="curr-price2" id="curr-price2">
+                    </div>
+                    <div class="sub-con">
+                        <span>Average you wanted:</span>
+                        <input type="number" name="temp-avg2" id="temp-avg2">
+                    </div>
+                    <div class="sub-con avg-con">
+                        <span>You will need to buy</span>
+                        <div id="avg-with-icon">
+                            <div id="quantity"></div>
+                            Shares
+                        </div>
+                    </div>
+                    <div class="sub-con">
+                        <input type="button" value="Reset" onclick="reInit()">
+                        <input type="button" value="Calculate" onclick="calQuantity()">
+                    </div>
+                    <span id="p2-link">&leftarrow;Stock Average Calculator</span>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+
     <script>
         var curr_avg, avg_count, curr_price, buy_count, average;
         var avgEle = document.querySelector("#average")
+        var quanEle = document.querySelector("#quantity")
         var iElement = document.querySelector("#icon")
+        var mainCon = document.querySelector("#main-con")
 
-        document.querySelector("#curr-avg").addEventListener("change", function (e) {
+        document.getElementById("curr-avg").addEventListener("change", function (e) {
             curr_avg = makeInt(e.target.value)
         })
-        document.querySelector("#avg-count").addEventListener("change", function (e) {
+        document.getElementById("avg-count").addEventListener("change", function (e) {
             avg_count = makeInt(e.target.value)
         })
-        document.querySelector("#curr-price").addEventListener("change", function (e) {
+        document.getElementById("curr-price").addEventListener("change", function (e) {
             curr_price = makeInt(e.target.value)
         })
-        document.querySelector("#buy-count").addEventListener("change", function (e) {
+        document.getElementById("buy-count").addEventListener("change", function (e) {
             buy_count = makeInt(e.target.value)
+        })
+
+        document.getElementById("curr-avg2").addEventListener("change", function (e) {
+            curr_avg = makeInt(e.target.value)
+        })
+        document.getElementById("avg-count2").addEventListener("change", function (e) {
+            avg_count = makeInt(e.target.value)
+        })
+        document.getElementById("curr-price2").addEventListener("change", function (e) {
+            curr_price = makeInt(e.target.value)
+        })
+        document.getElementById("temp-avg2").addEventListener("change", function (e) {
+            average = makeInt(e.target.value)
         })
 
         function makeInt(str) {
@@ -164,23 +239,25 @@
 
         function reInit() {
             document.querySelector("#sform").reset()
+            document.querySelector("#qform").reset()
             curr_avg = 0
             avg_count = 0
             curr_price = 0
             buy_count = 0
             average = 0
             avgEle.innerHTML = "0"
+            quanEle.innerHTML = "0"
             iElement.classList.remove("inc")
             iElement.classList.remove("dec")
         }
         reInit()
 
         function isEmpty() {
-            return curr_avg == 0 || avg_count == 0 || curr_price == 0 || buy_count == 0
+            return curr_avg == 0 || avg_count == 0 || curr_price == 0
         }
 
         function calAverage() {
-            if (isEmpty()) {
+            if (isEmpty() || buy_count == 0) {
                 avgEle.innerHTML = "0"
                 iElement.classList.remove("inc")
                 iElement.classList.remove("dec")
@@ -201,6 +278,29 @@
                 iElement.classList.add("dec")
             }
         }
+
+        function calQuantity() {
+            if (isEmpty() || average == 0) {
+                avgEle.innerHTML = "0"
+                return
+            }
+            var quantity = (avg_count * (curr_avg - average)) / (average - curr_price)
+            if (quantity < 0)
+                document.querySelector("#temp-avg2").style.color = "red"
+            else {
+                document.querySelector("#temp-avg2").style.color = ""
+                quanEle.innerHTML = quantity.toFixed(2)
+            }
+        }
+
+        document.querySelector("#p1-link").addEventListener("click", function () {
+            mainCon.style.left = "-340px"
+            reInit()
+        })
+        document.querySelector("#p2-link").addEventListener("click", function () {
+            mainCon.style.left = "0"
+            reInit()
+        })
     </script>
 </body>
 
