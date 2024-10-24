@@ -15,6 +15,7 @@
 
         #main {
             position: absolute;
+            background-color: white;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
@@ -31,7 +32,6 @@
         }
 
         .container {
-            background-color: white;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -160,7 +160,7 @@
                         <input type="button" value="Reset" onclick="reInit()">
                         <input type="button" value="Calculate" onclick="calAverage()">
                     </div>
-                    <span id="p1-link">Stock Quantity Calculator &rightarrow;</span>
+                    <span id="p1-link">To Calculate the Quantity, <u>Click here</u></span>
                 </div>
             </form>
             <form id="sform" action="">
@@ -194,7 +194,7 @@
                         <input type="button" value="Reset" onclick="reInit()">
                         <input type="button" value="Calculate" onclick="calQuantity()">
                     </div>
-                    <span id="p2-link">&leftarrow;Stock Average Calculator</span>
+                    <span id="p2-link">To Calculate the Average, <u>Click here</u></span>
                 </div>
             </form>
         </div>
